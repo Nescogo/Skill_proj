@@ -49,7 +49,7 @@ while True:
     print_arr()
     pos += 1
     if pos > 4:
-        z = check_win()
+        z = check_win(array)
         if z is not None:
             print("Выиграл игрок", z)
             break
