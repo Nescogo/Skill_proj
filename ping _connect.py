@@ -11,7 +11,6 @@ def do_ping_sweep(ip, num_of_host):
 
 def sent_http_request(target, method, headers=None, payload=None):
     headers_dict = dict()
-    
     if headers:
         for header in headers:
             header_name = header.split(":")[0]
@@ -35,7 +34,7 @@ parser.add_argument('-t', '--target', type=str, help='address')
 parser.add_argument('-i', '--ip', type=str, help='IP address')
 parser.add_argument('-n', '--num_of_hosts',type=int, help='Number of hosts')
 parser.add_argument('-m', '--method',choices=['GET', 'POST'], type=str, help='GET/POST')
-parser.add_argument('-hd', '--headers',type=list, help='language', nargs='*')
+parser.add_argument('-hd', '--headers',type=str, help='headers', nargs='*')
 args = parser.parse_args()
 if args.task == 'scan':
     for host_num in range(args.num_of_hosts): 
