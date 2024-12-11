@@ -31,6 +31,7 @@ def sent_http_request(target, method, headers=None, payload=None):
             return f"Время ожидания ответа {target} вышло\n"
     else:
         return f"Не выбран метод GET или POST для ресурса {target}\n"
+    response.close()
     return(
         f"[#] Response status code: {response.status_code}\n"
         f"[#] Response headers: {json.dumps(dict(response.headers), indent=4, sort_keys=True)}\n"
