@@ -7,7 +7,7 @@ def do_ping_sweep(ip, num_of_host):
     scanned_ip = network_ip + str(int(ip_parts[3]) + num_of_host)
     response = os.popen(f'ping -n 1 {scanned_ip}') 
     res = response.readlines()
-    print(f"[#] Result of scanning: {scanned_ip} [#]\n{res[2]}", end='\n\n')
+    return f"[#] Result of scanning: {scanned_ip} [#]\n{res[2]}"
 
 def sent_http_request(target, method, headers=None, payload=None):
     headers_dict = dict()
@@ -18,10 +18,20 @@ def sent_http_request(target, method, headers=None, payload=None):
             headers_dict[header_name] = ":".join(header_value)
 
     if method == "GET":
-        response = requests.get(target, headers=headers_dict)
+        try:
+            response = requests.get(target, headers=headers_dict, timeout=10)
+        except requests.exceptions.Timeout:
+            return f"Время ожидания ответа {target} вышло\n"
+        except:
+            return f"Неверный адрес ресурса {target}\n"
     elif method == "POST":
-        response = requests.post(target, headers=headers_dict, data=payload)
-    print(
+        try:
+            response = requests.post(target, headers=headers_dict, data=payload, timeout=10)
+        except requests.exceptions.Timeout:
+            return f"Время ожидания ответа {target} вышло\n"
+    else:
+        return f"Не выбран метод GET или POST для ресурса {target}\n"
+    return(
         f"[#] Response status code: {response.status_code}\n"
         f"[#] Response headers: {json.dumps(dict(response.headers), indent=4, sort_keys=True)}\n"
         f"[#] Response content:\n {response.text}")
@@ -35,11 +45,10 @@ parser.add_argument('-i', '--ip', type=str, help='IP address')
 parser.add_argument('-n', '--num_of_hosts',type=int, help='Number of hosts')
 parser.add_argument('-m', '--method',choices=['GET', 'POST'], type=str, help='GET/POST')
 parser.add_argument('-hd', '--headers',type=str, help='headers', nargs='*')
+parser.add_argument('-p', '--payload',type=str, help='POST request payload')
 args = parser.parse_args()
 if args.task == 'scan':
     for host_num in range(args.num_of_hosts): 
-        do_ping_sweep(args.ip , host_num)
+        print(do_ping_sweep(args.ip , host_num))
 if args.task == 'sendhttp':
-    if args.method == "POST":
-        post_request_payload = str(input("Payload:"))
-    sent_http_request(args.target, args.method, args.headers, post_request_payload)
+    print(sent_http_request(args.target, args.method, args.headers, args.payload))
