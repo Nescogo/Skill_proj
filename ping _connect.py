@@ -29,6 +29,8 @@ def sent_http_request(target, method, headers=None, payload=None):
             response = requests.post(target, headers=headers_dict, data=payload, timeout=10)
         except requests.exceptions.Timeout:
             return f"Время ожидания ответа {target} вышло\n"
+        except:
+            return f"Неверный адрес ресурса {target}\n"
     else:
         return f"Не выбран метод GET или POST для ресурса {target}\n"
     response.close()
