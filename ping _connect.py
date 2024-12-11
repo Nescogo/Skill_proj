@@ -40,7 +40,6 @@ def sent_http_request(target, method, headers=None, payload=None):
         f"[#] Response content:\n {response.text}")
 
 
-post_request_payload = None
 parser = argparse.ArgumentParser(description='Network scanner')
 parser.add_argument('task', choices=['scan', 'sendhttp'], help='Network scan or send HTTP request')
 parser.add_argument('-t', '--target', type=str, help='address')
