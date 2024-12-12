@@ -1,7 +1,7 @@
-FROM brunneis/python:3.8.3-ubuntu-20.04
-COPY main.py .
+FROM python:3.12-alpine
+WORKDIR /app
 COPY requirement.txt .
 RUN pip install -r requirement.txt
+ADD main.py .
 EXPOSE 8080:8080
-ENTRYPOINT ["python3"]
-CMD ["main.py"]
+ENTRYPOINT ["python3","main.py"]
