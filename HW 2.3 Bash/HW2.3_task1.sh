@@ -8,15 +8,15 @@ sudo apt-get install sl
 sl
 wait
 #3
-string1=`apt -qq list ruby-backports | awk '{print $NF}'`
+string1=`sudo apt-cache -qq pkgnames ruby-backports | awk '{print $1}' | head -1`
 #4
 sudo apt-get update && apt-get upgrade
 #package install
-for iteration in [apache2 python3 openssh-server]
+for iteration in  apache2 python3 openssh-server 
 do sudo apt-get install $iteration; done
 echo "------------------------------------------------------------"
 #5
-if [ $string1 != "[installed]" ] 
+if [ $string1 != 'ruby-backports' ] 
 then sudo apt-get install ruby-backports 
 else echo "Backports already installed"; fi
 #6
