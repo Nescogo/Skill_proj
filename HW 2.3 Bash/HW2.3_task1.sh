@@ -22,11 +22,11 @@ else echo "Backports already installed"; fi
 #6
 echo "------------------------------------------------------------"
 echo "Apache start"
-sudo systemctl start apache2
+sudo systemctl enable --now apache2
 #7
 echo "------------------------------------------------------------"
 echo "Openssh start"
-sudo systemctl enable ssh
+sudo systemctl enable --now ssh
 #8
 echo "------------------------------------------------------------"
 echo "System info"
