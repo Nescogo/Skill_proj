@@ -24,4 +24,4 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-* 4 * * * /usr/bin/clamscan -i -r / >> /var/log/clamav/daily_antivirus.log
+* 4 * * 0 /usr/bin/clamscan -i -r / >> /var/log/clamav/daily_antivirus.log
